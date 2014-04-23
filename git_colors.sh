@@ -37,7 +37,7 @@ function git_branch {
 
  
 #export PS1="\[$WHITE\]\n\![\W]"          # history # basename of pwd
-export PS1="\[\033[0;32m\]\u \033[0;34m\]@ \033[0;36m\]\h:[\W] "
+export PS1="\[\033[0;32m\]\u \033[0;34m\]@ \033[0;36m\]\h:[\w] "
 export PS1="$PS1\[\$(git_color)\]"       # colors git status
 export PS1="$PS1\$(git_branch)"          # prints current branch
 export PS1="$PS1\[$BLUE\]\$\[$RESET\] "  # '#' for root, else '$'

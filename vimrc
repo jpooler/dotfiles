@@ -3,6 +3,11 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+set autoindent
+set visualbell
+set smarttab
+set noexpandtab
+
 let g:ackprg = 'ag --nogroup --nocolor --column'
 set background=dark
 colorscheme solarized
