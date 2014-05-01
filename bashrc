@@ -1,9 +1,12 @@
 export EDITOR=vim
 alias ll="ls -lah"
 alias tmux="TERM=screen-256color-bce tmux"
+alias mux="TERM=screen-256color-bce mux"
 source ~/git/dotfiles/git_colors.sh
 source ~/git/dotfiles/git-completion.bash
-alias vpclb="ssh vpc-odin-lb.aws.p11a.com"
+
+#Host Aliases
+alias volb="ssh vpc-odin-lb.aws.p11a.com"
 
 #source ~/.bash-powerline.sh
 
