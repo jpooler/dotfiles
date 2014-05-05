@@ -1,8 +1,15 @@
 shopt -s expand_aliases
 export EDITOR=vim
+
 alias ll="ls -lah"
 alias tmux="TERM=screen-256color-bce tmux"
 alias mux="TERM=screen-256color-bce mux"
+alias rm='rm -I --preserve-root'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+
 source ~/git/dotfiles/git_colors.sh
 source ~/git/dotfiles/git-completion.bash
 
