@@ -34,8 +34,8 @@ alias ou1="ssh odin-util-01"
 alias ou2="ssh odin-util-02" 
 alias oud1="ssh deploy@odin-util-01" 
 alias oud2="ssh deploy@odin-util-02" 
-alias oa1="ssh odin-admin-01" 
-alias oad1="ssh deploy@odin-admin-01" 
+alias oadm1="ssh odin-admin-01" 
+alias oadmd1="ssh deploy@odin-admin-01" 
 
 
 
