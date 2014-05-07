@@ -4,7 +4,7 @@ export EDITOR=vim
 alias ll="ls -lah"
 alias tmux="TERM=screen-256color-bce tmux"
 alias mux="TERM=screen-256color-bce mux"
-alias rm='rm -I --preserve-root'
+alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
