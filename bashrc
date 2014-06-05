@@ -1,5 +1,17 @@
 shopt -s expand_aliases
+shopt -s histappend
+shopt -s cmdhist
 export EDITOR=vim
+export BYOBU_PREFIX=$(brew --prefix)
+
+
+export HISTSIZE=25000
+export HISTFILESIZE=999999
+export HISTTIMEFORMAT="%h %d %H:%M:%S "
+export HISTCONTROL="ignoreboth"
+export HISTIGNORE="ls:ps:history"
+
+
 
 alias ll="ls -lah"
 alias tmux="TERM=screen-256color-bce tmux"
