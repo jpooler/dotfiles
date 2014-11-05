@@ -1,4 +1,5 @@
 [[ -s ~/.bashrc ]] && source ~/.bashrc
+source ~/.profile
 export CLICOLOR=1
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 export PATH=$PATH:~/git/odin-deploy/util
@@ -35,3 +36,5 @@ pyenv() {
     command pyenv "$command" "$@";;
   esac
 }
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

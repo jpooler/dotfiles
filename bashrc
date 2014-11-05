@@ -49,8 +49,10 @@ alias oad4="ssh deploy@odin-api-04"
 alias oad5="ssh deploy@odin-api-05"
 alias oad6="ssh deploy@odin-api-06" 
 alias ou1="ssh odin-util-01" 
-alias ou1="ssh odin-util-01" 
 alias ou2="ssh odin-util-02" 
+alias ou3="ssh odin-util-03" 
+alias ou4="ssh odin-util-04" 
+alias ou5="ssh odin-util-05" 
 alias oud1="ssh deploy@odin-util-01" 
 alias oud2="ssh deploy@odin-util-02" 
 alias oadm1="ssh odin-admin-01" 
@@ -65,3 +67,5 @@ alias oadmd1="ssh deploy@odin-admin-01"
 
 complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
 
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
