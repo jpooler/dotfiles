@@ -1,17 +1,19 @@
-source /Users/jarrod/Library/Python/2.7/lib/python/site-packages/powerline/bindings/vim/plugin/powerline.vim
+source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 execute pathogen#infect()
-syntax on
+syntax enable
 filetype plugin indent on
 
 set autoindent
 set visualbell
 set smarttab
 set noexpandtab
-
+set t_Co=256
+"let g:solarized_termcolors=256
+let g:solarized_termtrans = 1
 let g:ackprg = 'ag --nogroup --nocolor --column'
 set background=dark
 colorscheme solarized
