@@ -12,8 +12,8 @@ set visualbell
 set smarttab
 set noexpandtab
 set t_Co=256
-"let g:solarized_termcolors=256
-let g:solarized_termtrans = 1
+let g:solarized_termcolors=256
+"let g:solarized_termtrans = 1
 let g:ackprg = 'ag --nogroup --nocolor --column'
 set background=dark
 colorscheme solarized
