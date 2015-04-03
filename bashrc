@@ -20,6 +20,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
+alias hg='history | grep $1'
 
 
 source ~/git/dotfiles/git_colors.sh
