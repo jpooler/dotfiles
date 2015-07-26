@@ -2,7 +2,8 @@ source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powe
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+"set runtimepath^=~/.vim/bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/
 execute pathogen#infect()
 syntax enable
 filetype plugin indent on
@@ -11,12 +12,17 @@ set autoindent
 set visualbell
 set smarttab
 set noexpandtab
-set t_Co=256
-let g:solarized_termcolors=256
+"set t_Co=256
+"let g:solarized_termcolors=256
 "let g:solarized_termtrans = 1
 let g:ackprg = 'ag --nogroup --nocolor --column'
 set background=dark
 colorscheme solarized
+
+let g:Powerline_theme='short'
+let g:Powerline_colorscheme='solarized256_dark'
+
+let g:Powerline_symbols = "fancy"
 
 set splitbelow
 set splitright

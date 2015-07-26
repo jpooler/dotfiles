@@ -4,6 +4,7 @@ shopt -s cmdhist
 export EDITOR=vim
 export BYOBU_PREFIX=$(brew --prefix)
 
+# curl http://monitor.mt.corp.web/cgi-bin/objects.cache.cgi > ~/bin/machines
 
 export HISTSIZE=25000
 export HISTFILESIZE=999999
@@ -32,3 +33,4 @@ source ~/git/dotfiles/git-completion.bash
 
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:/usr/local/sbin"
