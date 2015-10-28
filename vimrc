@@ -12,6 +12,7 @@ set autoindent
 set visualbell
 set smarttab
 set noexpandtab
+set paste
 "set t_Co=256
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans = 1
@@ -31,6 +32,11 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+set backspace=indent,eol,start
+"autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+autocmd BufNewFile,BufRead *Vagrantfile* set filetype=ruby
+
 
 
 if exists("+relativenumber")

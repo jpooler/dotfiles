@@ -1,12 +1,13 @@
 #!/bin/bash
 
-RED="\033[0;31m"
-YELLOW="\033[0;33m"
-GREEN="\033[0;32m"
-OCHRE="\033[38;5;95m"
-BLUE="\033[0;34m"
-WHITE="\033[0;37m"
-RESET="\033[0m"
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+BOLDGREEN='\033[0;36m'
+OCHRE='\033[38;5;95m'
+BLUE='\033[0;34m'
+WHITE='\033[0;37m'
+RESET='\033[0m'
 
 function git_color {
   local git_status="$(git status 2> /dev/null)"
@@ -22,8 +23,6 @@ function git_color {
   fi fi fi
 }
 
-
-
 function git_branch {
   local git_status="$(git status 2> /dev/null)"
   local pattern="^On branch ([^${IFS}]*)"
@@ -34,14 +33,13 @@ function git_branch {
   fi
 }
 
+export PS1="\[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w] "
+#export PS1="\[\033[0;32m\]\u \[\033[0;34m\]@ \[\033[0;36m\]\h:[\w] "
+#export PS1="$BLUE[\t] $GREEN\u $BLUE@ $BOLDGREEN\h:[\w]"
+#export PS1="$PS1\[$(git_color)\]"       # colors git status
+#export PS1="$PS1$(git_branch)"          # prints current branch
+#export PS1="$PS1\[$BLUE\]\$\[$RESET\] "  # '#' for root, else '$'
 
- 
-#export PS1="\[$WHITE\]\n\![\W]"          # history # basename of pwd
-export PS1="\[\033[0;32m\]\u \[\033[0;34m\]@ \[\033[0;36m\]\h:[\w] "
 export PS1="$PS1\[\$(git_color)\]"       # colors git status
 export PS1="$PS1\$(git_branch)"          # prints current branch
 export PS1="$PS1\[$BLUE\]\$\[$RESET\] "  # '#' for root, else '$'
-
-
-
-
