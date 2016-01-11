@@ -33,7 +33,7 @@ function git_branch {
   fi
 }
 
-export PS1="\[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w] "
+export PS1="\[$BLUE\][\t] \[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w] "
 #export PS1="\[\033[0;32m\]\u \[\033[0;34m\]@ \[\033[0;36m\]\h:[\w] "
 #export PS1="$BLUE[\t] $GREEN\u $BLUE@ $BOLDGREEN\h:[\w]"
 #export PS1="$PS1\[$(git_color)\]"       # colors git status

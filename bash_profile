@@ -1,5 +1,5 @@
 [[ -s ~/.bashrc ]] && source ~/.bashrc
-#source ~/.profile
+source ~/.profile
 export CLICOLOR=1
 
  if [ -f $(brew --prefix)/etc/bash_completion ]; then

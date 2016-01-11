@@ -24,6 +24,7 @@ alias sln='ssh lnbox'
 
 source ~/Tools/git/dotfiles/git_colors.sh
 source ~/Tools/git/dotfiles/git-completion.bash
+#source ~/Tools/git/ansible_upstream/hacking/env-setup
 
 #source ~/.bash-powerline.sh
 
