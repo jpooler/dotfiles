@@ -1,9 +1,12 @@
+set runtimepath^=~/.vim/bundle/
+call pathogen#incubate()
+call pathogen#helptags()
 "source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
 "set runtimepath^=~/.vim/bundle/ctrlp.vim
-set runtimepath^=~/.vim/bundle/
+"set runtimepath^=~/.vim/bundle/
 execute pathogen#infect()
 syntax enable
 filetype plugin indent on
