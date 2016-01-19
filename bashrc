@@ -3,6 +3,7 @@ shopt -s cmdhist
 shopt -s histappend
 export EDITOR=vim
 export BYOBU_PREFIX=$(brew --prefix)
+source ~/ansible/hacking/env-setup &> /dev/null
 
 export HISTSIZE=25000
 export HISTFILESIZE=999999
