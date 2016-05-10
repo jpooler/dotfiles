@@ -3,7 +3,6 @@ shopt -s cmdhist
 shopt -s histappend
 export EDITOR=vim
 export BYOBU_PREFIX=$(brew --prefix)
-source ~/ansible/hacking/env-setup &> /dev/null
 
 export HISTSIZE=25000
 export HISTFILESIZE=999999
@@ -20,12 +19,10 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
 alias hg='history | grep $1'
-alias sln='ssh lnbox'
 
 
-source ~/Tools/git/dotfiles/git_colors.sh
-source ~/Tools/git/dotfiles/git-completion.bash
-#source ~/Tools/git/ansible_upstream/hacking/env-setup
+source ~/Tools/dotfiles/git_colors.sh
+source ~/Tools/dotfiles/git-completion.bash
 
 #source ~/.bash-powerline.sh
 
@@ -43,3 +40,6 @@ fi
 if [ -f `brew --prefix`/etc/bash_completion.d/pip ]; then
     source `brew --prefix`/etc/bash_completion.d/pip
 fi
+eval $(docker-machine env default)
+
+[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
