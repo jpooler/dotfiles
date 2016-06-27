@@ -11,6 +11,17 @@ execute pathogen#infect()
 syntax enable
 filetype plugin indent on
 
+
+set nocompatible
+filetype on
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "vadv/vim-chef"
+
 set autoindent
 set visualbell
 set smarttab
@@ -82,3 +93,6 @@ else                  " fallback
   " inverts numbering
   nnoremap <C-n>n :set number! number?<CR>
 endif
+
+autocmd FileType ruby,eruby set filetype=ruby.eruby.chef
+
