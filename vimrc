@@ -11,11 +11,12 @@ execute pathogen#infect()
 syntax enable
 filetype plugin indent on
 
-
+set noswapfile
 set nocompatible
 filetype on
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+let g:ctrlp_show_hidden = 1
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
