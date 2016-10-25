@@ -7,7 +7,7 @@ source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
 export BYOBU_PREFIX=$(brew --prefix)
 
-export HISTSIZE=25000
+export HISTSIZE=250000000
 export HISTFILESIZE=999999
 #export HISTTIMEFORMAT="%h %d %H:%M:%S "
 export HISTCONTROL=ignoredups:erasedups
@@ -40,6 +40,7 @@ complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
+#export PATH="$PATH:/usr/local/bin/terraform:/home/jarrod.pooler/terraform"
 export WORKON_HOME=~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
