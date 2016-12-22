@@ -5,5 +5,5 @@ fi
 
 complete -C '/usr/local/bin/aws_completer' aws
 
-export PATH=/usr/local/bin/aws:$PATH
+#export PATH=/usr/local/bin/aws:$PATH
 
