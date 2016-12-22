@@ -42,7 +42,7 @@ complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
-#export PATH="$PATH:/usr/local/bin/terraform:/home/jarrod.pooler/terraform"
+export PATH="$PATH:~/Tools/git/tfenv/bin"
 export WORKON_HOME=~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 

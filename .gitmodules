@@ -52,3 +52,9 @@
 [submodule "vim/bundle/vim-terraform"]
 	path = vim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
+[submodule "vim/bundle/vim-hclfmt"]
+	path = vim/bundle/vim-hclfmt
+	url = https://github.com/fatih/vim-hclfmt.git
+[submodule "vim/bundle/vim-tmux-navigator"]
+	path = vim/bundle/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
