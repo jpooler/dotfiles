@@ -5,6 +5,8 @@ export EDITOR=vim
 
 source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
+source ~/Tools/dotfiles/tmuxinator_completion.bash
+
 export BYOBU_PREFIX=$(brew --prefix)
 
 export HISTSIZE=250000000
@@ -34,15 +36,15 @@ alias dps='docker ps'
 alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
 alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias uvp="cd ~/.vim && git submodule update --init && git submodule foreach git pull origin master"
-
+alias novars="docker logs -f $(docker ps | awk '/novars/ {print $NF}')"
 
 complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:~/Tools/git/tfenv/bin"
+export PATH="~/Tools/git/tfenv/bin:$PATH"
 export WORKON_HOME=~/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+. /usr/local/bin/virtualenvwrapper.sh
 
 #export PATH="$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -52,4 +54,15 @@ source /usr/local/bin/virtualenvwrapper.sh
 #. ~/.docker-completion.sh
 #. ~/.docker-machine-completion.sh
 #. ~/.docker-compose-completion.sh
+
+
+# add this configuration to ~/.bashrc
+export HH_CONFIG=hicolor         # get more colors
+shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 

@@ -52,8 +52,6 @@ set backspace=indent,eol,start
 "autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 autocmd BufNewFile,BufRead *Vagrantfile* set filetype=ruby
 
-
-
 if exists("+relativenumber")
   if v:version >= 400
     set number
@@ -97,3 +95,8 @@ endif
 
 autocmd FileType ruby,eruby set filetype=ruby.eruby.chef
 
+
+
+let g:hcl_fmt_autosave = 0
+let g:tf_fmt_autosave = 0
+let g:nomad_fmt_autosave = 0
