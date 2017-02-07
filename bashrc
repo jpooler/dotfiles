@@ -2,6 +2,8 @@ shopt -s expand_aliases
 shopt -s histappend
 shopt -s cmdhist
 export EDITOR=vim
+export PIP_REQUIRE_VIRTUALENV=true
+
 
 source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
@@ -49,7 +51,7 @@ export WORKON_HOME=~/.virtualenvs
 #export PATH="$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 
-[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
+[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
 
 #. ~/.docker-completion.sh
 #. ~/.docker-machine-completion.sh
