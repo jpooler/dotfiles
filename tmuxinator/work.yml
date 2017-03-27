@@ -7,7 +7,7 @@ root: ~/Tools/docker_final_countdown/devops/docker_compose
 # socket_name: foo
 
 # Runs before everything. Use it to start daemons etc.
-pre: docker-compose -f docker-compose.yml up -d ; sleep 20
+pre: docker start novars && docker-compose -f docker-compose.yml up -d ; sleep 20
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
@@ -22,7 +22,7 @@ windows:
   - editor:
       layout: tiled
       panes:
-        - docker logs -f `docker ps | awk '/routing-service/ {print $NF}'`
+#        - docker logs -f `docker ps | awk '/routing-service/ {print $NF}'`
         - docker logs -f `docker ps | awk '/customer-identity-svc/ {print $NF}'`
         - docker logs -f `docker ps | awk '/ui-hub/ {print $NF}'`
         - docker logs -f `docker ps | awk '/mindi-rules-engine/ {print $NF}'`

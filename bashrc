@@ -5,9 +5,12 @@ export EDITOR=vim
 export PIP_REQUIRE_VIRTUALENV=true
 
 
+#[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
+
 source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
 source ~/Tools/dotfiles/tmuxinator_completion.bash
+source ~/Tools/dotfiles/testkitchen_completion.bash
 
 export BYOBU_PREFIX=$(brew --prefix)
 
@@ -45,13 +48,14 @@ complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
+export PATH="/Users/jarrod.pooler/.chefdk/gem/ruby/2.3.0/bin:$PATH"
 export WORKON_HOME=~/.virtualenvs
 . /usr/local/bin/virtualenvwrapper.sh
 
 #export PATH="$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 
-[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
+#[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
 
 #. ~/.docker-completion.sh
 #. ~/.docker-machine-completion.sh
@@ -68,3 +72,5 @@ export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file s
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 
+
+[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
