@@ -1,27 +1,27 @@
 shopt -s expand_aliases
-shopt -s histappend
-shopt -s cmdhist
 export EDITOR=vim
 export PIP_REQUIRE_VIRTUALENV=true
-
-
-#[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
-
 source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
 source ~/Tools/dotfiles/tmuxinator_completion.bash
 source ~/Tools/dotfiles/testkitchen_completion.bash
 
+# History Fix
+export HISTTIMEFORMAT="%y-%m-%d %T " # Set the history datetime format
+export HISTCONTROL=ignoredups:erasedups:ignorespace # Deduplicate history entries
+export HISTSIZE=250000000 # Save more history in memory
+export HISTFILESIZE=100000 # Save more history to the history file
+export HISTIGNORE="ls:ps:history"
+shopt -s histappend # Set the history serialization to append instead of overwrite
+shopt -s cmdhist
+
+# add this configuration to ~/.bashrc
+export HH_CONFIG=hicolor         # get more colors
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+#export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+
 export BYOBU_PREFIX=$(brew --prefix)
 
-export HISTSIZE=250000000
-export HISTFILESIZE=999999
-#export HISTTIMEFORMAT="%h %d %H:%M:%S "
-export HISTCONTROL=ignoredups:erasedups
-#export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
-export HISTIGNORE="ls:ps:history"
-#eval $(docker-machine env default)
-#Modify to not remove all containers
 #drm() { docker rm $(docker ps -q -a); }
 db() { docker build -t="$1" .; }
 dcb() { docker-compose build "$1" ; }
@@ -47,6 +47,9 @@ complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/Users/jarrod.pooler/Tools/sandbox/go/bin"
+export GOPATH="/Users/jarrod.pooler/Tools/sandbox/go"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
 export PATH="/Users/jarrod.pooler/.chefdk/gem/ruby/2.3.0/bin:$PATH"
 export WORKON_HOME=~/.virtualenvs
@@ -54,23 +57,7 @@ export WORKON_HOME=~/.virtualenvs
 
 #export PATH="$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-
-#[ -s "~/.scm_breeze/scm_breeze.sh" ] && source "~/.scm_breeze/scm_breeze.sh"
-
-#. ~/.docker-completion.sh
-#. ~/.docker-machine-completion.sh
-#. ~/.docker-compose-completion.sh
-
-
-# add this configuration to ~/.bashrc
-export HH_CONFIG=hicolor         # get more colors
-shopt -s histappend              # append new history items to .bash_history
-export HISTCONTROL=ignorespace   # leading space hides commands from history
-export HISTFILESIZE=10000        # increase history file size (default is 500)
-export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
-
 
 [ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
