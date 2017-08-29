@@ -27,7 +27,8 @@ set autoindent
 set visualbell
 set smarttab
 set noexpandtab
-set paste
+set pastetoggle=<F4>
+set copyindent
 "set t_Co=256
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans = 1

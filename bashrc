@@ -1,6 +1,7 @@
 shopt -s expand_aliases
 export EDITOR=vim
-export PIP_REQUIRE_VIRTUALENV=true
+#export PIP_REQUIRE_VIRTUALENV=true
+
 source ~/Tools/dotfiles/git_colors.sh
 source ~/Tools/dotfiles/git-completion.bash
 source ~/Tools/dotfiles/tmuxinator_completion.bash
@@ -16,8 +17,8 @@ shopt -s histappend # Set the history serialization to append instead of overwri
 shopt -s cmdhist
 
 # add this configuration to ~/.bashrc
-export HH_CONFIG=hicolor         # get more colors
-export HISTFILESIZE=10000        # increase history file size (default is 500)
+#export HH_CONFIG=hicolor         # get more colors
+#export HISTFILESIZE=10000        # increase history file size (default is 500)
 #export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 
 export BYOBU_PREFIX=$(brew --prefix)
@@ -43,15 +44,12 @@ alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias uvp="cd ~/.vim && git submodule update --init && git submodule foreach git pull origin master"
 alias novars="docker logs -f $(docker ps | awk '/novars/ {print $NF}')"
 
-complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
+#complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+export PATH="~/Library/Python/2.7/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:/Users/jarrod.pooler/Tools/sandbox/go/bin"
-export GOPATH="/Users/jarrod.pooler/Tools/sandbox/go"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
-export PATH="/Users/jarrod.pooler/.chefdk/gem/ruby/2.3.0/bin:$PATH"
 export WORKON_HOME=~/.virtualenvs
 . /usr/local/bin/virtualenvwrapper.sh
 
@@ -60,4 +58,15 @@ export WORKON_HOME=~/.virtualenvs
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 
-[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
+#[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
+
+[ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
+
+eval "$(rbenv init -)"
+
+export PATH="/opt/chefdk/bin:$PATH"
+
+export KITCHEN_YAML=.kitchen.yml
+export KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
+
+export PATH="$HOME/.rbenv/bin:$PATH"
