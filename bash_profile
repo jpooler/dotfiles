@@ -1,5 +1,6 @@
 
 [ -s ~/.bashrc ] && source ~/.bashrc
+[ -s ~/.profile ] && source ~/.profile
 
 #complete -C '/usr/local/bin/aws_completer' aws
 complete -C '/Users/jpooler/Library/Python/2.7/bin/aws_completer' aws
