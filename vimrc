@@ -256,3 +256,29 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+" ruby-runner set ruby buffer
+command! FR set filetype=ruby
+
+
+set completefunc=syntaxcomplete#Complete
+
+" Remove autocomment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Omni complete for ruby
+
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_fuzzy_completion = 1
+let g:neocomplete_enable_fuzzy_completion_start_length = 2
+let g:neocomplete_enable_camel_case_completion = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#max_list = 10
+let g:neocomplete#force_overwrite_completefunc = 1
+let g:neocomplete#enable_auto_select = 0
+
+" Terraform fmt
+let g:terraform_fmt_on_save = 1
