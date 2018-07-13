@@ -133,6 +133,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 let g:go_disable_autoinstall = 0
 
@@ -282,3 +283,15 @@ let g:neocomplete#enable_auto_select = 0
 
 " Terraform fmt
 let g:terraform_fmt_on_save = 1
+let g:terraform_fold_sections=1
+let g:terraform_remap_spacebar=1
+
+" Terraform magic!
+command! -bar PrettifyTerraformKeywords %s/^"\(module\|resource\|data\)"/\1/e
+command! -bar PrettifyTerraformNewlines %s/.*=.*\zs\n\n\ze/\r/e
+command! -bar PrettifyTerraformAssigns %s/\s\+\zs"\(.*\)"\ze.*=/\1/e
+command! -bar FormatTerraform %!terraform fmt -
+command! PrettyFormatTerraform PrettifyTerraformKeywords|PrettifyTerraformAssigns|PrettifyTerraformNewlines|FormatTerraform
+
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+

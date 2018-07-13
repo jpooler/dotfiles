@@ -21,6 +21,9 @@ shopt -s cmdhist
 #export HISTFILESIZE=10000        # increase history file size (default is 500)
 #export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 
+export HH_CONFIG=keywords,hicolor,casesensitive         # get more colors
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+
 export BYOBU_PREFIX=$(brew --prefix)
 
 #drm() { docker rm $(docker ps -q -a); }
@@ -49,8 +52,9 @@ export PATH="~/Library/Python/2.7/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
-export GOPATH=$HOME/Tools/go_learning/bin
+#export GOPATH=$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 #export PATH="/opt/local/bin:$PATH"
 export WORKON_HOME=~/Tools/pythonenvs
 . /usr/local/bin/virtualenvwrapper.sh
@@ -130,4 +134,68 @@ bebp() {
 
   bundle exec build prepare
   return $?
+}
+
+# Functions we'll use for tfinit, tfplan and tfapply in this repo
+
+function tfinit() {
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+        echo -e "\nusage: tfinit <workspace>\n"
+        return 1
+    fi
+    # Test if workspace can be used
+    terraform workspace select "$1" >/dev/null 2>/dev/null
+    # If it fails, init is required before using any non-default workspace
+    if [ $? -ne 0 ]; then
+        # Init may fail on backend and that's okay
+        terraform init || echo -e "\nINFO: Init with default workspace Completed.  The above error is expected.  YMMV.\n\n\n"
+    fi
+    # Need to switch to desired workspace before init
+    terraform workspace select "$1"
+    terraform init
+}
+
+function tfplan() {
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+        echo -e "\nusage: tfplan <workspace>\n"
+        return 1
+    fi
+    var_file="$1.tfvars"
+    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
+    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
+    tfinit $1 && \
+    terraform plan -var-file="$var_file" ${@:2}
+}
+
+function tfapply() {
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+        echo -e "\nusage: tfapply <workspace>\n"
+        return 1
+    fi
+    var_file="$1.tfvars"
+    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
+    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
+    tfinit "$1" && \
+    [ -f "$2" ] && terraform apply "$2" || terraform apply -var-file="$var_file" ${@:2}
+}
+
+#tunnel <Jumphost DNS> <Application port> <Localhost port> <Node tunneling to>
+tunnel() {
+    PROXYHOST=$1
+    RPORT=$2
+    LPORT=$3
+    PASSTHRUHOST=$4
+
+    if [ -z $LPORT ]; then
+        LPORT=$RPORT
+    fi
+
+    if [ -z $PASSTHRUHOST ]; then
+        PASSTHRUHOST=localhost
+    fi
+
+    ssh $PROXYHOST -L ${LPORT}:$PASSTHRUHOST:${RPORT}
 }
