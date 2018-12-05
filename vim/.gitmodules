@@ -52,3 +52,12 @@
 [submodule "bundle/vim-chef"]
 	path = bundle/vim-chef
 	url = https://github.com/vadv/vim-chef
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
+        url = https://github.com/fatih/vim-go.git
+[submodule "bundle/vim-ruby-minitest"]
+	path = bundle/vim-ruby-minitest
+        url = https://github.com/sunaku/vim-ruby-minitest.git
+[submodule "bundle/vim-ruby-runner"]
+	path = bundle/vim-ruby-runner
+        url = https://github.com/henrik/vim-ruby-runner.git 
