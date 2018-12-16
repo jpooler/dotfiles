@@ -64,3 +64,6 @@
 [submodule "vim/bundle/nerdtree.vim"]
 	path = vim/bundle/nerdtree.vim
 	url = https://github.com/wycats/nerdtree.git
+[submodule "vim/bundle/vim-ansible"]
+	path = vim/bundle/vim-ansible
+	url = https://github.com/chase/vim-ansible-yaml.git
