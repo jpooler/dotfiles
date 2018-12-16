@@ -76,3 +76,6 @@
 [submodule "vim/bundle/vim-ruby-minitest"]
 	path = vim/bundle/vim-ruby-minitest
 	url = https://github.com/sunaku/vim-ruby-minitest.git
+[submodule "vim/bundle/vim-ruby-runner"]
+	path = vim/bundle/vim-ruby-runner
+	url = https://github.com/henrik/vim-ruby-runner.git
