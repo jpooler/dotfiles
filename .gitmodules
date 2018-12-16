@@ -58,3 +58,6 @@
 [submodule "vim/bundle/vim-tmux-navigator"]
 	path = vim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
+[submodule "vim/bundle/solarized-powerlines.git"]
+	path = vim/bundle/solarized-powerlines.git
+	url = https://github.com/pearofducks/solarized-powerlines.git
