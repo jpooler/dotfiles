@@ -79,3 +79,6 @@
 [submodule "vim/bundle/vim-ruby-runner"]
 	path = vim/bundle/vim-ruby-runner
 	url = https://github.com/henrik/vim-ruby-runner.git
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = https://github.com/VundleVim/Vundle.vim.git
