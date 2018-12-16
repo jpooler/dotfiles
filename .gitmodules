@@ -73,3 +73,6 @@
 [submodule "vim/bundle/vim-addon-mw-utils"]
 	path = vim/bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "vim/bundle/vim-ruby-minitest"]
+	path = vim/bundle/vim-ruby-minitest
+	url = https://github.com/sunaku/vim-ruby-minitest.git
