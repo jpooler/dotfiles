@@ -1,0 +1,22 @@
+==================
+ 
+\033[1;31mfields\033[0m
+ 
+fields() { head -n 1 "$1" | tr "\\t" "\\n" | nl -w1 | pr -t -2; }
+ 
+\033[1;36mfields [FILE]\033[0m
+ 
+Prints a 2-column, numbered list of the field names in the header line of a tab-separated text file
+
+==================
+
+\033[1;31misthere\033[0m
+
+isthere() { if (($(grep -c -m 1 "$1" "$3"))); then echo "YES"; else echo "NO"; fi; }
+
+\033[1;36misthere [PATTERN] in [FILE]\033[0m
+
+The command is a little unusual. The "-m" option for grep stops the search after a specified number of matching lines. Here that number is 1, so grep stops looking after the first match. The "-c" option then returns "1". Also unusual is the IF part of this command, because it's in BASH arithmetic brackets, but there doesn't seem to be an IF test. The output will be "1" if grep finds the pattern, "0" if it doesn't. But where's the arithmetical test of that output? None is needed. BASH arithmetic can also be used as a kind of "truth test": ((0)) is false, and a non-zero expression like ((1)) is true.
+
+The other slightly odd thing about isthere is that it looks for a pattern as the first argument ($1) within a file as the third argument ($3). That's because I like to write the word "in" between pattern and file, so "in" is the second argument and the function ignores it.
+==================
