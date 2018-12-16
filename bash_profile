@@ -15,3 +15,10 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
 
 [ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
 
+
+[ -s "/Users/jarrod/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod/.scm_breeze/scm_breeze.sh"
+
+if [ -d "$HOME/Tools/platform-tools" ] ; then
+    export PATH="$HOME/Tools/platform-tools:$PATH"
+fi
+  [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
