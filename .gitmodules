@@ -58,12 +58,3 @@
 [submodule "vim/bundle/vim-tmux-navigator"]
 	path = vim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "vim/bundle/vim-markdown"]
-	path = vim/bundle/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "vim/bundle/vim-jinja"]
-	path = vim/bundle/vim-jinja
-	url = https://github.com/lepture/vim-jinja.git
-[submodule "vim/bundle/bundle/vim-ansible-yaml"]
-	path = vim/bundle/bundle/vim-ansible-yaml
-	url = https://github.com/chase/vim-ansible-yaml.git

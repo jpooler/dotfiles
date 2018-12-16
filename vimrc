@@ -133,6 +133,7 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0 
 let g:syntastic_check_on_open = 0 
 let g:syntastic_check_on_wq = 0
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 let g:go_disable_autoinstall = 0
 
@@ -259,3 +260,39 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 set completefunc=syntaxcomplete#Complete
 nmap <leader>t :!thyme -d<cr>
+" ruby-runner set ruby buffer
+command! FR set filetype=ruby
+
+
+
+" Remove autocomment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Omni complete for ruby
+
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_fuzzy_completion = 1
+let g:neocomplete_enable_fuzzy_completion_start_length = 2
+let g:neocomplete_enable_camel_case_completion = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#max_list = 10
+let g:neocomplete#force_overwrite_completefunc = 1
+let g:neocomplete#enable_auto_select = 0
+
+" Terraform fmt
+let g:terraform_fmt_on_save = 1
+let g:terraform_fold_sections=1
+let g:terraform_remap_spacebar=1
+
+" Terraform magic!
+command! -bar PrettifyTerraformKeywords %s/^"\(module\|resource\|data\)"/\1/e
+command! -bar PrettifyTerraformNewlines %s/.*=.*\zs\n\n\ze/\r/e
+command! -bar PrettifyTerraformAssigns %s/\s\+\zs"\(.*\)"\ze.*=/\1/e
+command! -bar FormatTerraform %!terraform fmt -
+command! PrettyFormatTerraform PrettifyTerraformKeywords|PrettifyTerraformAssigns|PrettifyTerraformNewlines|FormatTerraform
+
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
