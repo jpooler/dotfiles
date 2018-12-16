@@ -67,3 +67,6 @@
 [submodule "vim/bundle/vim-ansible"]
 	path = vim/bundle/vim-ansible
 	url = https://github.com/chase/vim-ansible-yaml.git
+[submodule "vim/bundle/vim-snipmate"]
+	path = vim/bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git
