@@ -2,10 +2,10 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-source ~/Tools/dotfiles/git_colors.sh
-source ~/Tools/dotfiles/git-completion.bash
-source ~/Tools/dotfiles/tmuxinator_completion.bash
-source ~/Tools/dotfiles/testkitchen_completion.bash
+source ~/Tools/git/dotfiles/git_colors.sh
+source ~/Tools/git/dotfiles/git-completion.bash
+source ~/Tools/git/dotfiles/tmuxinator_completion.bash
+source ~/Tools/git/dotfiles/testkitchen_completion.bash
 
 # History Fix
 #export HISTTIMEFORMAT="%y-%m-%d %T " # Set the history datetime format
@@ -52,6 +52,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
+alias vim='/usr/local/Cellar/vim/8.1.0850/bin/vim'
 alias hg='history | grep $1'
 #alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
@@ -67,9 +68,11 @@ export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
 #export GOPATH=$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 #export PATH="/opt/local/bin:$PATH"
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
@@ -88,7 +91,7 @@ if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 
 [ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
 
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
 export PATH="/opt/chefdk/bin:$PATH"
 

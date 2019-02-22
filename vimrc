@@ -1,28 +1,90 @@
 set runtimepath^=~/.vim/bundle/
-call pathogen#incubate()
-call pathogen#helptags()
-"source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
-"set runtimepath^=~/.vim/bundle/ctrlp.vim
-"set runtimepath^=~/.vim/bundle/
-execute pathogen#infect()
+set encoding=utf-8
+
+call plug#begin('~/.vim/plugged')
+Plug 'MarcWeber/vim-addon-mw-utils'
+" This one disables tab completion for some reason
+"Plug 'SirVer/ultisnips'
+Plug 'bling/vim-airline'
+Plug 'chase/vim-ansible-yaml'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'fatih/vim-go'
+Plug 'fatih/vim-hclfmt'
+Plug 'garbas/vim-snipmate'
+Plug 'hashivim/vim-terraform'
+Plug 'honza/vim-snippets'
+Plug 'kien/ctrlp.vim'
+Plug 'klen/python-mode'
+Plug 'mileszs/ack.vim'
+Plug 'pearofducks/solarized-powerlines'
+Plug 'rodjek/vim-puppet'
+Plug 'sunaku/vim-ruby-minitest'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'vadv/vim-chef'
+Plug 'wycats/nerdtree'
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
+call plug#end()
+
+
+" Syntastic Config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_quiet_messages = {'level': 'warnings'}
+
+"" (Optional)Remove Info(Preview) window
+set completeopt-=preview
+"
+"" (Optional)Hide Info(Preview) window after completions
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"
+"" (Optional) Enable terraform plan to be include in filter
+"let g:syntastic_terraform_tffilter_plan = 1
+"
+"" (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+"let g:terraform_completion_keys = 1
+"
+"" (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
+"let g:terraform_registry_module_completion = 1
+
+"let g:deoplete#enable_at_startup = 1
+
+"let g:deoplete#omni_patterns = {}
+
+"call deoplete#custom#option('omni_patterns', {
+"\ 'complete_method': 'omnifunc',
+"\ 'terraform': '[^ *\t"{=$]\w*',
+"\})
+" Use <TAB> to select the popup menu:
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+call deoplete#initialize()
+
+let g:deoplete#enable_at_startup = 1
+
 syntax enable
 filetype plugin indent on
 
+
 set noswapfile
 set nocompatible
-filetype on
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 let g:ctrlp_show_hidden = 1
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-"Bundle "vadv/vim-chef"
-"
 "Time to break some habits
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -40,12 +102,8 @@ set smarttab
 set noexpandtab
 set pastetoggle=<F4>
 set copyindent
-"set t_Co=256
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans = 1
 let g:ackprg = 'ag --nogroup --nocolor --column'
 set background=dark
-"colorscheme solarized
 
 let g:Powerline_theme='short'
 let g:Powerline_colorscheme='solarized256_dark'
@@ -61,7 +119,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 set backspace=indent,eol,start
-"autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 autocmd BufNewFile,BufRead *Vagrantfile* set filetype=ruby
 " Pre 7.4
 if exists("+relativenumber")
@@ -119,21 +176,11 @@ endif
 
 "autocmd FileType ruby map <F9> :w<CR>:!ruby -c %<CR>
 
-let g:hcl_fmt_autosave = 0
-let g:tf_fmt_autosave = 0
-let g:nomad_fmt_autosave = 0
+let g:hcl_fmt_autosave = 1
+let g:tf_fmt_autosave = 1
+let g:nomad_fmt_autosave = 1
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|^.git$\|_site'
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0 
-let g:syntastic_check_on_open = 0 
-let g:syntastic_check_on_wq = 0
-let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 let g:go_disable_autoinstall = 0
 
@@ -143,7 +190,6 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1  
 let g:go_highlight_operators = 1  
 let g:go_highlight_build_constraints = 1  
-let g:neocomplete#enable_at_startup = 0
 
 
 let g:tagbar_type_go = {  
@@ -186,101 +232,13 @@ let mapleader = ","
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 
-"This is for neocomplete
-"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-"inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-set completefunc=syntaxcomplete#Complete
-nmap <leader>t :!thyme -d<cr>
-" ruby-runner set ruby buffer
-command! FR set filetype=ruby
-
-
+"set completefunc=syntaxcomplete#Complete
+"nmap <leader>t :!thyme -d<cr>
+"" ruby-runner set ruby buffer
+"command! FR set filetype=ruby
 
 " Remove autocomment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" Omni complete for ruby
-
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_fuzzy_completion = 1
-let g:neocomplete_enable_fuzzy_completion_start_length = 2
-let g:neocomplete_enable_camel_case_completion = 0
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#max_list = 10
-let g:neocomplete#force_overwrite_completefunc = 1
-let g:neocomplete#enable_auto_select = 0
 
 " Terraform fmt
 let g:terraform_fmt_on_save = 1
