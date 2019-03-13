@@ -1,5 +1,8 @@
 set runtimepath^=~/.vim/bundle/
 set encoding=utf-8
+set hlsearch
+set incsearch
+set smartcase
 
 call plug#begin('~/.vim/plugged')
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -19,6 +22,9 @@ Plug 'mileszs/ack.vim'
 Plug 'pearofducks/solarized-powerlines'
 Plug 'rodjek/vim-puppet'
 Plug 'sunaku/vim-ruby-minitest'
+Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
+Plug 'vim-ruby/vim-ruby'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'

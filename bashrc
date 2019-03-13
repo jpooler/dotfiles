@@ -39,9 +39,82 @@ export BYOBU_PREFIX=$(brew --prefix)
 # history | tr -s ' ' | cut -d ' ' -f3 | sort | uniq -c | sort -n | tail | perl -lane 'print $F[1], "\t", $F[0], " ", "▄" x ($F[0] / 12)'
 
 # Added 12/16/18
+# Can't find blogpost about this, fml
+
 functions() { cd ~/Tools/dotfiles; echo -e "$(cat functions)" | less -R; }
 
 isthere() { if (($(grep -c -m 1 "$1" "$3"))); then echo "YES"; else echo "NO"; fi; }
+function ec2ssh() {
+  ssh -C `aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" "Name=instance-state-name,Values=running" --output text --query "Reservations[0].Instances[0].PublicIpAddress"` $2 $3 $4 $5 $6 $7 $8 $9
+}
+
+function vpnssh() {
+  if [[ $1 =~ ^i-.* ]]; then
+    instance_ip=$(aws ec2 describe-instances --instance-ids $1 --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
+  else
+    instance_ip=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" "Name=instance-state-name,Values=running" --output text --query "Reservations[0].Instances[0].PrivateIpAddress")
+  fi
+  ssh -C $instance_ip $2 $3 $4 $5 $6 $7 $8 $9
+
+}
+
+function asgssh() {
+  if [ "$INDEX" == "" ]; then
+    INDEX=0
+  fi
+  ssh `aws ec2 describe-instances --filters "Name=tag:aws:autoscaling:groupName,Values=$1" "Name=instance-state-name,Values=running" --output text --query "Reservations[0].Instances[0].PrivateIpAddress"` $2 $3 $4 $5 $6 $7 $8 $9
+}
+
+function chefssh() {
+  if [[ $1 =~ ^i-.* ]]; then
+    instance_ip=$(aws ec2 describe-instances --instance-ids $1 --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
+  else
+    instance_ip=$1
+  fi
+  ssh -C -i ~/.ssh/chef-bootstrap-022916.pem ubuntu@$instance_ip $2 $3 $4 $5 $6 $7 $8 $9
+}
+
+awsacct_tools=( aws kitchen kops rake pry terraform )
+ 
+function awsacct() {
+  export AWS_ACCOUNT=$1
+  case $1 in
+  prod)
+    export KOPS_STATE_STORE=
+    kubectl config use-context minikube > /dev/null
+    ;; 
+  mgmt)
+    export KOPS_STATE_STORE=
+    kubectl config use-context minikube > /dev/null
+    ;;
+  redshirt)
+    export KOPS_STATE_STORE=s3://k8s-clusters.us1.cloudhealthtech.dev
+    kubectl config use-context us1.cloudhealthtech.dev > /dev/null
+    ;;
+  staging)
+    export KOPS_STATE_STORE=
+    kubectl config use-context minikube > /dev/null
+    ;;
+  ng)
+    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
+    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
+    ;;
+  ngdev)
+    export KOPS_STATE_STORE=s3://clusters.dev.cloudhealthtech.com
+    kubectl config use-context us1.dev.cloudhealthtech.com > /dev/null
+    ;;
+  *)
+    echo "$1 is not defined."
+    ;;
+  esac
+  awsacct_alias_tools
+}
+ 
+function awsacct_alias_tools() {
+  for i in ${awsacct_tools[@]}; do
+    alias $i="aws-vault exec --assume-role-ttl=60m $AWS_ACCOUNT -- $i"
+  done
+}
 
 #
 
@@ -88,6 +161,7 @@ export WORKON_HOME=~/.virtualenvs
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 
 #[ -s "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jarrod.pooler/.scm_breeze/scm_breeze.sh"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 [ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
 
@@ -222,3 +296,17 @@ tunnel() {
 
     ssh $PROXYHOST -L ${LPORT}:$PASSTHRUHOST:${RPORT}
 }
+
+alias so='if [ -z $CHT_ROOT ]; then export CHT_ROOT=/Users/jpooler/Tools/git; fi; aws-vault exec cloudsandbox -- rvm ruby-2.3.3@cht-cloud-sandbox do $CHT_ROOT/cht_eng/tools/bin/so.rb'
+
+security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db
+
+alias on_all_assets="grep ^module asset-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_all_drilldowns="grep ^module drilldown-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_all_collectors="grep ^module workers-collector.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_all_cubes="grep ^module workers-cubes.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_all_resque="grep ^module workers-resque.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_all_processors="grep ^module workers-processor.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+
+
+
