@@ -300,7 +300,7 @@ tunnel() {
 
 alias so='if [ -z $CHT_ROOT ]; then export CHT_ROOT=/Users/jpooler/Tools/git; fi; aws-vault exec cloudsandbox -- rvm ruby-2.3.3@cht-cloud-sandbox do $CHT_ROOT/cht_eng/tools/bin/so.rb'
 
-alais vault_timeout="security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db"
+alias vault_timeout="security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db"
 
 alias on_all_assets="grep ^module asset-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_drilldowns="grep ^module drilldown-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
