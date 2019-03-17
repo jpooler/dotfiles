@@ -77,23 +77,24 @@ function chefssh() {
 awsacct_tools=( aws kitchen kops rake pry terraform )
  
 function awsacct() {
+  security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db
   export AWS_ACCOUNT=$1
   case $1 in
   prod)
-    export KOPS_STATE_STORE=
-    kubectl config use-context minikube > /dev/null
+  #  #export KOPS_STATE_STORE=
+  #  #kubectl config use-context minikube > /dev/null
     ;; 
   mgmt)
-    export KOPS_STATE_STORE=
-    kubectl config use-context minikube > /dev/null
+  #  export KOPS_STATE_STORE=
+  #  kubectl config use-context minikube > /dev/null
     ;;
   redshirt)
     export KOPS_STATE_STORE=s3://k8s-clusters.us1.cloudhealthtech.dev
     kubectl config use-context us1.cloudhealthtech.dev > /dev/null
     ;;
   staging)
-    export KOPS_STATE_STORE=
-    kubectl config use-context minikube > /dev/null
+  #  export KOPS_STATE_STORE=
+  #  kubectl config use-context minikube > /dev/null
     ;;
   ng)
     export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
@@ -125,7 +126,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
-alias vim='/usr/local/Cellar/vim/8.1.0850/bin/vim'
+alias vim='/usr/local/Cellar/vim/8.1.1000/bin/vim'
 alias hg='history | grep $1'
 #alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
@@ -139,7 +140,7 @@ export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
-#export GOPATH=$HOME/Tools/go_learning/bin
+export GOPATH=$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 #export PATH="/opt/local/bin:$PATH"
@@ -299,7 +300,7 @@ tunnel() {
 
 alias so='if [ -z $CHT_ROOT ]; then export CHT_ROOT=/Users/jpooler/Tools/git; fi; aws-vault exec cloudsandbox -- rvm ruby-2.3.3@cht-cloud-sandbox do $CHT_ROOT/cht_eng/tools/bin/so.rb'
 
-security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db
+alais vault_timeout="security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db"
 
 alias on_all_assets="grep ^module asset-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_drilldowns="grep ^module drilldown-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
