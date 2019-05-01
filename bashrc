@@ -11,7 +11,7 @@ source ~/Tools/git/dotfiles/testkitchen_completion.bash
 #export HISTTIMEFORMAT="%y-%m-%d %T " # Set the history datetime format
 export HISTCONTROL=ignoredups:erasedups:ignorespace # Deduplicate history entries
 export HISTSIZE=250000000 # Save more history in memory
-export HISTFILESIZE=100000 # Save more history to the history file
+export HISTFILESIZE=100000000 # Save more history to the history file
 export HISTIGNORE="ls:ps:history"
 shopt -s histappend # Set the history serialization to append instead of overwrite
 shopt -s cmdhist
@@ -93,10 +93,14 @@ function awsacct() {
     kubectl config use-context us1.cloudhealthtech.dev > /dev/null
     ;;
   staging)
-  #  export KOPS_STATE_STORE=
-  #  kubectl config use-context minikube > /dev/null
+    export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
+    kubectl config use-context us1.staging.cloudhealthtech.com > /dev/null
     ;;
-  ng)
+  ngprod)
+    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
+    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
+    ;;
+  ngprod-esc)
     export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
     kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
     ;;
@@ -126,7 +130,8 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
-alias vim='/usr/local/Cellar/vim/8.1.1000/bin/vim'
+#alias vim='/usr/local/Cellar/vim/8.1.1000/bin/vim'
+alias vim='/usr/local/bin/vim'
 alias hg='history | grep $1'
 #alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"

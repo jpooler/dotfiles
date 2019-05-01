@@ -38,7 +38,20 @@ RESET='\033[0m'
 ##    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 ##    }
 #
-export PS1="\[$BLUE\][\t] \[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w]"
+#source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+##  PS1='$(kube_ps1)'$PS1
+#export KUBE_PS1_SHELL="bash"
+##PS1='[\u@\h \W $(kube_ps1)]\$ '
+# doesn't work
+#export PS1="\[$BLUE\][\t] $(kube_ps1) \[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w]"
+
+#### Working  verison with clock
+#export PS1="\[$BLUE\][\t] \[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w]"
+
+# Current
+#export PS1="\[$GREEN\]\u \[$BLUE\]@ \[$BOLDGREEN\]\h:[\w]"
+# Testing Removing Username/host
+export PS1="\[$BLUE\][\w]"
 
 ###export PS1="\[\033[0;32m\]\u \[\033[0;34m\]@ \[\033[0;36m\]\h:[\w] "
 ###export PS1="$BLUE[\t] $GREEN\u $BLUE@ $BOLDGREEN\h:[\w]"
@@ -72,5 +85,11 @@ function markup_git_branch {
   fi
 }
 
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+#export PS1="$PS1\$(markup_git_branch \$(git_branch)) "
+#export PS1="$PS1\[$BLUE\]\$\[$RESET\] "
+#export PS1="$(kube_ps1)$PS1"
+
 export PS1="$PS1\$(markup_git_branch \$(git_branch)) "
 export PS1="$PS1\[$BLUE\]\$\[$RESET\] "
+export PS1="\$(kube_ps1) $PS1"
