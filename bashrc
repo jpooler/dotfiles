@@ -20,9 +20,6 @@ shopt -s cmdhist
 export HH_CONFIG=keywords,hicolor,casesensitive         # get more colors
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 
-export HH_CONFIG=keywords,hicolor,casesensitive         # get more colors
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
-
 export BYOBU_PREFIX=$(brew --prefix)
 
 #drm() { docker rm $(docker ps -q -a); }
@@ -41,7 +38,7 @@ export BYOBU_PREFIX=$(brew --prefix)
 # Added 12/16/18
 # Can't find blogpost about this, fml
 
-functions() { cd ~/Tools/dotfiles; echo -e "$(cat functions)" | less -R; }
+functions() { cd ~/Tools/git/dotfiles; echo -e "$(cat functions)" | less -R; }
 
 isthere() { if (($(grep -c -m 1 "$1" "$3"))); then echo "YES"; else echo "NO"; fi; }
 function ec2ssh() {
@@ -89,8 +86,8 @@ function awsacct() {
   #  kubectl config use-context minikube > /dev/null
     ;;
   redshirt)
-    export KOPS_STATE_STORE=s3://k8s-clusters.us1.cloudhealthtech.dev
-    kubectl config use-context us1.cloudhealthtech.dev > /dev/null
+    #export KOPS_STATE_STORE=s3://k8s-clusters.us1.cloudhealthtech.dev
+    #kubectl config use-context us1.cloudhealthtech.dev > /dev/null
     ;;
   staging)
     export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
@@ -137,6 +134,11 @@ alias hg='history | grep $1'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
 #alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias uvp="cd ~/.vim && git submodule update --init && git submodule foreach git pull origin master"
+alias k=kubectl
+complete -F __start_kubectl k
+alias kp="kubectl get po"
+alias kd="kubectl get deploy"
+
 
 #complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
 
@@ -145,7 +147,7 @@ export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
-export GOPATH=$HOME/Tools/go_learning/bin
+export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 #export PATH="/opt/local/bin:$PATH"
@@ -313,6 +315,7 @@ alias on_all_collectors="grep ^module workers-collector.tf | sed -e 's/module \"
 alias on_all_cubes="grep ^module workers-cubes.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_resque="grep ^module workers-resque.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_processors="grep ^module workers-processor.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_containers="grep ^module containers.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 
 
 
