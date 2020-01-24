@@ -17,7 +17,7 @@ Plug 'garbas/vim-snipmate'
 Plug 'hashivim/vim-terraform'
 Plug 'honza/vim-snippets'
 Plug 'kien/ctrlp.vim'
-Plug 'klen/python-mode'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'mileszs/ack.vim'
 Plug 'pearofducks/solarized-powerlines'
 Plug 'rodjek/vim-puppet'
@@ -248,7 +248,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Terraform fmt
 let g:terraform_fmt_on_save = 1
-let g:terraform_fold_sections=1
+let g:terraform_fold_sections=0
 let g:terraform_remap_spacebar=1
 
 " Terraform magic!

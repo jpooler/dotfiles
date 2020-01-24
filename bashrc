@@ -17,6 +17,7 @@ shopt -s histappend # Set the history serialization to append instead of overwri
 shopt -s cmdhist
 
 # add this configuration to ~/.bashrc
+#https://github.com/dvorka/hstr
 export HH_CONFIG=keywords,hicolor,casesensitive         # get more colors
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 
@@ -71,17 +72,25 @@ function chefssh() {
   ssh -C -i ~/.ssh/chef-bootstrap-022916.pem ubuntu@$instance_ip $2 $3 $4 $5 $6 $7 $8 $9
 }
 
-awsacct_tools=( aws kitchen kops rake pry terraform )
+awsacct_tools=( aws custodian docker kitchen kops rake pry terraform ansible ansible-playbook )
  
 function awsacct() {
   security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db
   export AWS_ACCOUNT=$1
   case $1 in
   prod)
+    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
+    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
+    ;; 
+  prod-esc)
   #  #export KOPS_STATE_STORE=
   #  #kubectl config use-context minikube > /dev/null
     ;; 
   mgmt)
+  #  export KOPS_STATE_STORE=
+  #  kubectl config use-context minikube > /dev/null
+    ;;
+  mgmt-esc)
   #  export KOPS_STATE_STORE=
   #  kubectl config use-context minikube > /dev/null
     ;;
@@ -90,6 +99,10 @@ function awsacct() {
     #kubectl config use-context us1.cloudhealthtech.dev > /dev/null
     ;;
   staging)
+    export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
+    kubectl config use-context us1.staging.cloudhealthtech.com > /dev/null
+    ;;
+  staging-esc)
     export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
     kubectl config use-context us1.staging.cloudhealthtech.com > /dev/null
     ;;
@@ -130,14 +143,16 @@ alias ln='ln -i'
 #alias vim='/usr/local/Cellar/vim/8.1.1000/bin/vim'
 alias vim='/usr/local/bin/vim'
 alias hg='history | grep $1'
-#alias dps='docker ps'
+alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
 #alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias uvp="cd ~/.vim && git submodule update --init && git submodule foreach git pull origin master"
 alias k=kubectl
 complete -F __start_kubectl k
-alias kp="kubectl get po"
+alias kg="kubectl get po"
 alias kd="kubectl get deploy"
+alias kpause='kind get nodes|xargs docker pause'
+alias kunpause='kind get nodes|xargs docker unpause'
 
 
 #complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
@@ -145,14 +160,41 @@ alias kd="kubectl get deploy"
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 #export PATH="~/Library/Python/2.7/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
+export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:$HOME/Tools/sandbox"
 export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
 export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
+export PATH="$HOME/src/cht-ng/confluent/confluent-5.2.2/bin:$PATH"
 #export PATH="/opt/local/bin:$PATH"
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+export  VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
+
+#Python has been installed as
+#  /usr/local/opt/python@3.8/bin/python3
+#
+#You can install Python packages with
+#  /usr/local/opt/python@3.8/bin/pip3 install <package>
+#They will install into the site-package directory
+#  /usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages
+#
+#See: https://docs.brew.sh/Homebrew-and-Python
+#
+#python@3.8 is keg-only, which means it was not symlinked into /usr/local,
+#because this is an alternate version of another formula.
+#
+#If you need to have python@3.8 first in your PATH run:
+#  echo 'export PATH="/usr/local/opt/python@3.8/bin:$PATH"' >> ~/.bash_profile
+#
+#For compilers to find python@3.8 you may need to set:
+#  export LDFLAGS="-L/usr/local/opt/python@3.8/lib"
+#
+#For pkg-config to find python@3.8 you may need to set:
+#  export PKG_CONFIG_PATH="/usr/local/opt/python@3.8/lib/pkgconfig"
+#
 
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
@@ -241,51 +283,65 @@ bebp() {
   return $?
 }
 
-# Functions we'll use for tfinit, tfplan and tfapply in this repo
 
 function tfinit() {
-    if [ -z "$1" ]; then
-        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-        echo -e "\nusage: tfinit <workspace>\n"
-        return 1
-    fi
-    # Test if workspace can be used
-    terraform workspace select "$1" >/dev/null 2>/dev/null
-    # If it fails, init is required before using any non-default workspace
-    if [ $? -ne 0 ]; then
-        # Init may fail on backend and that's okay
-        terraform init || echo -e "\nINFO: Init with default workspace Completed.  The above error is expected.  YMMV.\n\n\n"
-    fi
-    # Need to switch to desired workspace before init
-    terraform workspace select "$1"
-    terraform init
+  terraform init && terraform get -update
 }
 
 function tfplan() {
-    if [ -z "$1" ]; then
-        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-        echo -e "\nusage: tfplan <workspace>\n"
-        return 1
-    fi
-    var_file="$1.tfvars"
-    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
-    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
-    tfinit $1 && \
-    terraform plan -var-file="$var_file" ${@:2}
+    terraform plan 
 }
 
-function tfapply() {
-    if [ -z "$1" ]; then
-        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-        echo -e "\nusage: tfapply <workspace>\n"
-        return 1
-    fi
-    var_file="$1.tfvars"
-    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
-    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
-    tfinit "$1" && \
-    [ -f "$2" ] && terraform apply "$2" || terraform apply -var-file="$var_file" ${@:2}
-}
+
+
+# Assumes Terraform workspaces are in use
+
+# Functions we'll use for tfinit, tfplan and tfapply in this repo
+
+#function tfinit() {
+#    if [ -z "$1" ]; then
+#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+#        echo -e "\nusage: tfinit <workspace>\n"
+#        return 1
+#    fi
+#    # Test if workspace can be used
+#    terraform workspace select "$1" >/dev/null 2>/dev/null
+#    # If it fails, init is required before using any non-default workspace
+#    if [ $? -ne 0 ]; then
+#        # Init may fail on backend and that's okay
+#        terraform init || echo -e "\nINFO: Init with default workspace Completed.  The above error is expected.  YMMV.\n\n\n"
+#    fi
+#    # Need to switch to desired workspace before init
+#    terraform workspace select "$1"
+#    terraform init
+#}
+#
+#
+#function tfplan() {
+#    if [ -z "$1" ]; then
+#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+#        echo -e "\nusage: tfplan <workspace>\n"
+#        return 1
+#    fi
+#    var_file="$1.tfvars"
+#    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
+#    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
+#    tfinit $1 && \
+#    terraform plan -var-file="$var_file" ${@:2}
+#}
+#
+#function tfapply() {
+#    if [ -z "$1" ]; then
+#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
+#        echo -e "\nusage: tfapply <workspace>\n"
+#        return 1
+#    fi
+#    var_file="$1.tfvars"
+#    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
+#    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
+#    tfinit "$1" && \
+#    [ -f "$2" ] && terraform apply "$2" || terraform apply -var-file="$var_file" ${@:2}
+#}
 
 #tunnel <Jumphost DNS> <Application port> <Localhost port> <Node tunneling to>
 tunnel() {
@@ -316,6 +372,7 @@ alias on_all_cubes="grep ^module workers-cubes.tf | sed -e 's/module \"/-target=
 alias on_all_resque="grep ^module workers-resque.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_processors="grep ^module workers-processor.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_containers="grep ^module containers.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+
 
 
 
