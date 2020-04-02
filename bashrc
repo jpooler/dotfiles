@@ -47,6 +47,10 @@ function ec2ssh() {
 }
 
 function vpnssh() {
+  #  if [ $(netstat -nr | grep -c "^172.19") -eq 0 ]; then
+  #echo "Please connect to the VPN first."
+  #exit 1
+  #  fi
   if [[ $1 =~ ^i-.* ]]; then
     instance_ip=$(aws ec2 describe-instances --instance-ids $1 --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
   else
@@ -157,7 +161,7 @@ alias kunpause='kind get nodes|xargs docker unpause'
 
 #complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
 
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+#export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 #export PATH="~/Library/Python/2.7/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/bin"
@@ -372,6 +376,9 @@ alias on_all_cubes="grep ^module workers-cubes.tf | sed -e 's/module \"/-target=
 alias on_all_resque="grep ^module workers-resque.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_all_processors="grep ^module workers-processor.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
 alias on_containers="grep ^module containers.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+alias on_resource="grep ^resource wavefront_http.tf | sed -e 's/resource \"/-target=/g' -e 's/\" \"/./g'  -e 's/\" {/ /g' | tr -d '\n'"
+
+#alias tf_pr="terraform plan $(git diff origin/master..HEAD | grep 'resource "' | sed -e 's/.*resource "/-target=/' -e 's/" "/./' -e 's/" {/ /' | tr -d '\n')"
 
 
 
