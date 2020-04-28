@@ -289,11 +289,11 @@ bebp() {
 
 
 function tfinit() {
-  terraform init && terraform get -update
+  aws-vault exec $AWS_ACCOUNT -- terraform init && terraform get -update
 }
 
 function tfplan() {
-    terraform plan 
+  aws-vault exec $AWS_ACCOUNT -- terraform plan
 }
 
 
