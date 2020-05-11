@@ -83,45 +83,13 @@ function awsacct() {
   export AWS_ACCOUNT=$1
   case $1 in
   prod)
-    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
-    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
+    #export KOPS_STATE_STORE=s3://
+    #kubectl config use-context $CONTEXT > /dev/null
     ;; 
   prod-esc)
   #  #export KOPS_STATE_STORE=
   #  #kubectl config use-context minikube > /dev/null
     ;; 
-  mgmt)
-  #  export KOPS_STATE_STORE=
-  #  kubectl config use-context minikube > /dev/null
-    ;;
-  mgmt-esc)
-  #  export KOPS_STATE_STORE=
-  #  kubectl config use-context minikube > /dev/null
-    ;;
-  redshirt)
-    #export KOPS_STATE_STORE=s3://k8s-clusters.us1.cloudhealthtech.dev
-    #kubectl config use-context us1.cloudhealthtech.dev > /dev/null
-    ;;
-  staging)
-    export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
-    kubectl config use-context us1.staging.cloudhealthtech.com > /dev/null
-    ;;
-  staging-esc)
-    export KOPS_STATE_STORE=s3://clusters.staging.cloudhealthtech.com
-    kubectl config use-context us1.staging.cloudhealthtech.com > /dev/null
-    ;;
-  ngprod)
-    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
-    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
-    ;;
-  ngprod-esc)
-    export KOPS_STATE_STORE=s3://clusters.prod.cloudhealthtech.com
-    kubectl config use-context us1.prod.cloudhealthtech.com > /dev/null
-    ;;
-  ngdev)
-    export KOPS_STATE_STORE=s3://clusters.dev.cloudhealthtech.com
-    kubectl config use-context us1.dev.cloudhealthtech.com > /dev/null
-    ;;
   *)
     echo "$1 is not defined."
     ;;
@@ -200,12 +168,12 @@ export  VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
 #  export PKG_CONFIG_PATH="/usr/local/opt/python@3.8/lib/pkgconfig"
 #
 
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+#export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
 #export WORKON_HOME=~/Tools/pythonenvs
-export WORKON_HOME=~/.virtualenvs
-. /usr/local/bin/virtualenvwrapper.sh
+#export WORKON_HOME=~/.virtualenvs
+#. /usr/local/bin/virtualenvwrapper.sh
 
 
 
@@ -365,21 +333,56 @@ tunnel() {
     ssh $PROXYHOST -L ${LPORT}:$PASSTHRUHOST:${RPORT}
 }
 
-alias so='if [ -z $CHT_ROOT ]; then export CHT_ROOT=/Users/jpooler/Tools/git; fi; aws-vault exec cloudsandbox -- rvm ruby-2.3.3@cht-cloud-sandbox do $CHT_ROOT/cht_eng/tools/bin/so.rb'
 
-alias vault_timeout="security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db"
-
-alias on_all_assets="grep ^module asset-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_all_drilldowns="grep ^module drilldown-db.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_all_collectors="grep ^module workers-collector.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_all_cubes="grep ^module workers-cubes.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_all_resque="grep ^module workers-resque.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_all_processors="grep ^module workers-processor.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_containers="grep ^module containers.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
-alias on_resource="grep ^resource wavefront_http.tf | sed -e 's/resource \"/-target=/g' -e 's/\" \"/./g'  -e 's/\" {/ /g' | tr -d '\n'"
+#alias vault_timeout="security set-keychain-settings -l -u -t 28800 ~/Library/Keychains/aws-vault.keychain-db"
+# Make this a generic "file" parser
+#alias on_containers="grep ^module containers.tf | sed -e 's/module \"/-target=module./g' -e 's/\" {/ /g' | tr -d '\n'"
+#alias on_resource="grep ^resource wavefront_http.tf | sed -e 's/resource \"/-target=/g' -e 's/\" \"/./g'  -e 's/\" {/ /g' | tr -d '\n'"
 
 #alias tf_pr="terraform plan $(git diff origin/master..HEAD | grep 'resource "' | sed -e 's/.*resource "/-target=/' -e 's/" "/./' -e 's/" {/ /' | tr -d '\n')"
 
 
+#pipenv ftw
+alias bb="brew bundle"
+alias bu="brew update && brew upgrade `brew outdated`"
+# Enable pipenv completion
+eval "$(pipenv --completion)"
+#function cd {
+#    builtin cd "$@"
+#    if [ -f "Pipfile" ] ; then
+#        pipenv shell
+#    fi
+#}
 
-
+## Activate current folder's pipenv virtualenv
+## or accept an explicit virtualenv name
+#workon() {
+#    if [ $# -eq 0 ]
+#    then
+#        source "$(pipenv --venv)/bin/activate"
+#    else
+#        source "~/.virtualenvs/$1/bin/activate"
+#    fi
+#}
+#
+## Making virtualenv alias
+#mkvenv() {
+#    cd ~/.virtualenvs
+#    virtualenv "$@"
+#    cd -
+#    workon "$1"
+#}
+#
+## Automatic virtualenv sourcing
+#function auto_pipenv_shell {
+#    if [ ! -n "$VIRTUAL_ENV" ]; then
+#        if [ -f "Pipfile" ] ; then
+#            workon
+#        fi
+#    fi
+#}
+#function cd {
+#    builtin cd "$@"
+#    auto_pipenv_shell
+#}
+#auto_pipenv_shell

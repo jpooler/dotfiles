@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+ansible = "==2.9"
+cookiecutter = "*"
+ansible-lint = "*"
+docker = "*"
+flake8 = "*"
+molecule = "*"
+testinfra = "*"
+importlib-metadata = "*"
+
+[requires]
+python_version = "3.7"
