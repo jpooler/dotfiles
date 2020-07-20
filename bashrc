@@ -256,64 +256,80 @@ bebp() {
 }
 
 
-function tfinit() {
-  aws-vault exec $AWS_ACCOUNT -- terraform init && terraform get -update
-}
+#function tfinit() {
+#  aws-vault exec $AWS_ACCOUNT -- terraform init && terraform get -update
+#}
+#
+#function tfplan() {
+#  aws-vault exec $AWS_ACCOUNT -- terraform plan
+#}
 
-function tfplan() {
-  aws-vault exec $AWS_ACCOUNT -- terraform plan
-}
-
-
+function fa() {
+     for i in AWS_SESSION_TOKEN AWS_SECRET_ACCESS_KEY AWS_ACCESS_KEY_ID; do unset $i; echo "$i unset"; done
+ }
 
 # Assumes Terraform workspaces are in use
 
 # Functions we'll use for tfinit, tfplan and tfapply in this repo
+#TODO Add in some tests if not using environments pattern for vars
+function tfinit() {
+    vertical=csbb
+    application=`grep -Hr "app_name" ../environments/global.tfvars | sed -e 's/.*\=\ //' | sed -e 's/"//g'`
+    #application=$2
+    if [ -z "$application" ]; then
+        application=$2
+        if [ -z "$2" ]; then
+        echo "Application not set, please supply another var"
+        echo -e "\nusage: tfinit <environment> <application>\n"
+        return 1
+    fi
+    fi
+    echo "Application is $application"
+#
+#    if [ -z "$2" ]; then
+#        echo "Application not set, please supply another var"
+#        echo -e "\nusage: tfinit <environment> <application>\n"
+#        return 1
+#    fi
+#
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply an environment , such as 'sbx,dev,qat,stg,prd'"
+        echo -e "\nusage: tfinit <environment>\n"
+        return 1
+    fi
+    rm -rf "${PWD}/.terraform"
+    terraform init -backend-config="bucket=$1-nebula-apps-terraform" -backend-config="dynamodb_table=$1-nebula-apps-terraform" -backend-config="key=$1/${vertical}/${application}.tfstate"  -backend-config="region=us-east-1" 
+}
 
-#function tfinit() {
-#    if [ -z "$1" ]; then
-#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-#        echo -e "\nusage: tfinit <workspace>\n"
-#        return 1
-#    fi
-#    # Test if workspace can be used
-#    terraform workspace select "$1" >/dev/null 2>/dev/null
-#    # If it fails, init is required before using any non-default workspace
-#    if [ $? -ne 0 ]; then
-#        # Init may fail on backend and that's okay
-#        terraform init || echo -e "\nINFO: Init with default workspace Completed.  The above error is expected.  YMMV.\n\n\n"
-#    fi
-#    # Need to switch to desired workspace before init
-#    terraform workspace select "$1"
-#    terraform init
-#}
-#
-#
-#function tfplan() {
-#    if [ -z "$1" ]; then
-#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-#        echo -e "\nusage: tfplan <workspace>\n"
-#        return 1
-#    fi
-#    var_file="$1.tfvars"
-#    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
-#    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
-#    tfinit $1 && \
-#    terraform plan -var-file="$var_file" ${@:2}
-#}
-#
-#function tfapply() {
-#    if [ -z "$1" ]; then
-#        echo "ERROR: Must supply a workspace, such as 'us-east-1'"
-#        echo -e "\nusage: tfapply <workspace>\n"
-#        return 1
-#    fi
-#    var_file="$1.tfvars"
-#    [ ! -f "$var_file" ] && var_file="../$1.tfvars"
-#    [ ! -f "$var_file" ] && var_file="../../$1.tfvars"
-#    tfinit "$1" && \
-#    [ -f "$2" ] && terraform apply "$2" || terraform apply -var-file="$var_file" ${@:2}
-#}
+function tfplan() {
+    # add block to test if supplied environments match 
+    local_version=`cat .terraform/terraform.tfstate  | jq -r '.backend.config.bucket' | sed -e 's/\-.*//'`
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply an environment , such as 'sbx,dev,qat,stg,prd'"
+        echo -e "\nusage: tfinit <environment>\n"
+        return 1
+    fi
+    var_file="$1.tfvars"
+    global_file="global.tfvars"
+    [ ! -f "$var_file" ] && var_file="../environments/$1.tfvars" && global_file="../environments/$global_file"
+    [ "$1" == "$local_version" ] && terraform plan -var-file="$var_file" -var-file="$global_file" ${@:2} && return 1
+    
+    tfinit $1 && \
+    terraform plan -var-file="$var_file" -var-file="$global_file" ${@:2}
+}
+
+function tfapply() {
+    if [ -z "$1" ]; then
+        echo "ERROR: Must supply an environment , such as 'sbx,dev,qat,stg,prd'"
+        echo -e "\nusage: tfinit <environment>\n"
+        return 1
+    fi
+    var_file="$1.tfvars"
+    global_file="global.tfvars"
+    [ ! -f "$var_file" ] && var_file="../environments/$1.tfvars" && global_file="../environments/$global_file"
+    tfinit $1 && \
+    [ -f "$2" ] && terraform apply "$2" || terraform apply -var-file="$var_file" -var-file="$global_file" ${@:2}
+}
 
 #tunnel <Jumphost DNS> <Application port> <Localhost port> <Node tunneling to>
 tunnel() {
