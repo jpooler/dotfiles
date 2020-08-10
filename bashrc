@@ -272,8 +272,23 @@ function fa() {
 
 # Functions we'll use for tfinit, tfplan and tfapply in this repo
 #TODO Add in some tests if not using environments pattern for vars
+# 
 function tfinit() {
+ENV_ARRAY=( "sbx:sandbox-nebula"
+        "dev:development-nebula" 
+        "qat:qa-nebula" 
+        "staging:staging-nebula" 
+        "production:production-nebula" )
+
+for account in "${ENV_ARRAY[@]}" ; do
+    KEY=${account%%:*}
+    VALUE=${account#*:}
+    echo "KEY: %s VALUE: %s.\n" "$KEY" "$VALUE"
+done
+
+    #export AWS_PROFILE=
     vertical=csbb
+    #vertical=scff
     application=`grep -Hr "app_name" ../environments/global.tfvars | sed -e 's/.*\=\ //' | sed -e 's/"//g'`
     #application=$2
     if [ -z "$application" ]; then
