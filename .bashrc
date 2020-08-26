@@ -2,10 +2,12 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-source ~/Tools/git/dotfiles/git_colors.sh
-source ~/Tools/git/dotfiles/git-completion.bash
-source ~/Tools/git/dotfiles/tmuxinator_completion.bash
-source ~/Tools/git/dotfiles/testkitchen_completion.bash
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#[ -s ~/.bash_profile ] && source ~/.bash_profile
+source ~/dotfiles/git_colors.sh
+source ~/dotfiles/git-completion.bash
+source ~/dotfiles/tmuxinator_completion.bash
+source ~/dotfiles/testkitchen_completion.bash
 
 # History Fix
 #export HISTTIMEFORMAT="%y-%m-%d %T " # Set the history datetime format
@@ -113,7 +115,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
 #alias vim='/usr/local/Cellar/vim/8.1.1000/bin/vim'
-alias vim='/usr/local/bin/vim'
+#alias vim='/usr/local/bin/vim'
 alias hg='history | grep $1'
 alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
@@ -417,3 +419,6 @@ eval "$(pipenv --completion)"
 #    auto_pipenv_shell
 #}
 #auto_pipenv_shell
+
+
+[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"

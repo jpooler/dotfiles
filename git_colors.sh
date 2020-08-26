@@ -85,7 +85,8 @@ function markup_git_branch {
   fi
 }
 
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+#source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+source "$(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh"
 #export PS1="$PS1\$(markup_git_branch \$(git_branch)) "
 #export PS1="$PS1\[$BLUE\]\$\[$RESET\] "
 #export PS1="$(kube_ps1)$PS1"
