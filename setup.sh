@@ -61,22 +61,16 @@ if [[ $(uname) == "Linux" ]]; then
 	if [ ! -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
 		git clone https://github.com/magicmonty/bash-git-prompt.git "$HOME/.bash-git-prompt" --depth=1
 	fi
+        if [ ! -f "$HOME/google-chrome-stable_current_amd64.deb" ]; then
+             wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+             sudo dpkg -i google-chrome-stable_current_amd64.deb
+        fi
 fi
 if  [ ! -d "$HOME/.scm_breeze" ]; then
          echo "CLONING SCM_BREEZE"
          git clone git://github.com/scmbreeze/scm_breeze.git "$HOME/.scm_breeze"
          "$HOME/.scm_breeze/install.sh"
-         ### TODO Setup gitscm file and symlnk
 fi
-
-# Check for existing Vundle Plugin Manager and install if missing
-# https://github.com/VundleVim/Vundle.vim
-#if [ "$(ls -A "$DOTFILES_DIR/.vim/bundle/Vundle.vim/autoload")" ]; then
-#	echo "Vundle already installed"
-#else
-#	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-#	vim +BundleInstall +qall 2 &>/dev/null
-#fi
 
 if [[ $(uname) == "Darwin" ]]; then
 	# Sets up VSCode .dotfiles per https://pawelgrzybek.com/sync-vscode-settings-and-snippets-via-dotfiles-on-github/
