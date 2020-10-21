@@ -65,6 +65,9 @@ if [[ $(uname) == "Linux" ]]; then
              wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
              sudo dpkg -i google-chrome-stable_current_amd64.deb
         fi
+        if [ ! -d "/snap/spotify" ]; then
+            sudo snap install spotify
+        fi
 fi
 if  [ ! -d "$HOME/.scm_breeze" ]; then
          echo "CLONING SCM_BREEZE"
@@ -206,12 +209,22 @@ if [[ $(uname) == "Linux" ]]; then
 		if (($(echo $os_version_id '<' 20.04 | bc))); then
 			sudo apt-get -y install build-essential curl fontconfig libffi-dev \
 				libssl-dev python-dev python-minimal python-pip python-setuptools \
-				python-virtualenv python3-pip python3-venv virtualenv zsh
+				pipenv vim nodejs docker docker-compose
 		else
 			sudo apt-get -y install build-essential curl fontconfig libffi-dev \
-				libssl-dev python3-dev python3-minimal python3-pip python3-setuptools \
-			        pipenv vim nodejs docker docker-compose
+				libssl-dev python3-dev python3-minimal python3-pip python-gi python3-gi python3-setuptools \
+			        pipenv vim nodejs docker docker-compose vlc
 		fi
+		if [ ! -f "/etc/apt/sources.list.d/dropbox.list" ]; then
+		    echo "installing dropbox"
+		    sudo touch "/etc/apt/sources.list.d/dropbox.list"
+		    echo "deb [arch=i386,amd64] http://linux.dropbox.com/ubuntu bionic main" | sudo tee -a /etc/apt/sources.list.d/dropbox.list
+		    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
+		    sudo apt update
+                    sudo apt install python3-gpg dropbox
+                fi
+
+
 #		if [ ! -d "$HOME/.fonts" ]; then
 #			mkdir "$HOME/.fonts"
 #		fi
