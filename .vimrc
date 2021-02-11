@@ -15,7 +15,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 " This one disables tab completion for some reason
 "Plug 'SirVer/ultisnips'
 Plug 'bling/vim-airline'
-Plug 'chase/vim-ansible-yaml'
+"Plug 'chase/vim-ansible-yaml'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
@@ -26,6 +26,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'mileszs/ack.vim'
 Plug 'pearofducks/solarized-powerlines'
+Plug 'pearofducks/ansible-vim'
 Plug 'rodjek/vim-puppet'
 Plug 'sunaku/vim-ruby-minitest'
 Plug 'janko-m/vim-test'
@@ -43,6 +44,8 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 
@@ -412,3 +415,5 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+
+let g:snipMate = { 'snippet_version' : 1 }

@@ -1,3 +1,5 @@
 [user]
 	name = jpooler
-	email = jarrod.pooler@gmail.com
+        email = jarrod.pooler@gmail.com
+[pull]
+    rebase = false

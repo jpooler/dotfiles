@@ -2,8 +2,9 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #[ -s ~/.bash_profile ] && source ~/.bash_profile
+export PATH=$HOME/homebrew/bin:$PATH
 source ~/dotfiles/git_colors.sh
 source ~/dotfiles/git-completion.bash
 source ~/dotfiles/tmuxinator_completion.bash
@@ -127,6 +128,7 @@ alias kg="kubectl get po"
 alias kd="kubectl get deploy"
 alias kpause='kind get nodes|xargs docker pause'
 alias kunpause='kind get nodes|xargs docker unpause'
+alias as='gcloud beta compute ssh --zone "us-east4-c" "mft-exi-manage-prd-cig-usea4-ansible-3d8f-lrfc" --tunnel-through-iap --project "exi-manage-prd-4ed1"'
 
 
 #complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
@@ -141,7 +143,9 @@ export GOPATH=$HOME/Tools/go_learning
 export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
-export PATH="$HOME/src/cht-ng/confluent/confluent-5.2.2/bin:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.14.4/bin/:$PATH"
+export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.11.14/bin/:$PATH"
 #export PATH="/opt/local/bin:$PATH"
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3

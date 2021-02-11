@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -x
+### TODO
+# Automate Running this before editing tf files: go get github.com/fatih/hclfmt
+
 
 # Ensure $HOME/.netrc exists. Do not store this in version control
 if [ ! -f "$HOME/.netrc" ]; then
@@ -14,7 +17,7 @@ DOTFILES_DIR_BACKUP="$HOME/.dotfiles_old"
 
 # Define dotfiles to manage
 dotfiles=(".atom" ".bash_profile" ".bashrc" ".gitconfig" ".gitignore_global"
-	".gitmessage" ".git-templates" ".macos" ".pylintrc"
+	".gitmessage" ".git.scmbrc" ".git-templates" ".macos" ".pylintrc"
 	".rubocop.yml" ".tmux.conf" ".vim" ".vimrc" ".yamllint.yml" )
 
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -71,7 +74,7 @@ if [[ $(uname) == "Linux" ]]; then
 fi
 if  [ ! -d "$HOME/.scm_breeze" ]; then
          echo "CLONING SCM_BREEZE"
-         git clone git://github.com/scmbreeze/scm_breeze.git "$HOME/.scm_breeze"
+         git clone https://github.com/scmbreeze/scm_breeze.git "$HOME/.scm_breeze"
          "$HOME/.scm_breeze/install.sh"
 fi
 
@@ -155,9 +158,9 @@ done
 # Playground - Location for throwaway projects
 # Projects - Location for keeping ongoing Projects
 
-folders=("$HOME/Git_Projects" "$HOME/Git_Projects/Personal/GitHub"
-	"$HOME/Git_Projects/Personal/GitHub/jpooler"
-	"$HOME/Git_Projects/Personal/GitLab" "$HOME/Git_Projects/Work"
+folders=("$HOME/Tools" "$HOME/Tools/Personal/git"
+	"$HOME/Tools/Personal/git/jpooler"
+	"$HOME/Tools/Personal/gitlab" "$HOME/Tools/work"
 	"$HOME/Playground" "$HOME/Projects")
 
 for folder in "${folders[@]}"; do
@@ -274,7 +277,7 @@ if [[ $(uname) == "Darwin" ]]; then
 	fi
 
 	# Fix Homebrew permissions for multi-user
-	sudo chown -R "$(whoami)":admin "$(brew --prefix)"/*
+	#sudo chown -R "$(whoami)":admin "$(brew --prefix)"/*
 	# sudo chmod -R +a "group:admin allow list,add_file,search,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,file_inherit,directory_inherit" $(brew --prefix)/*
 	# sudo chgrp -R admin $(brew --prefix)/*
 	# sudo chmod -R g+w $(brew --prefix)/*
@@ -286,6 +289,11 @@ if [[ $(uname) == "Darwin" ]]; then
 	else
 		brew install python
 	fi
+fi
+if  [ ! -d "$HOME/.scm_breeze" ]; then
+         echo "CLONING SCM_BREEZE"
+         git clone https://github.com/scmbreeze/scm_breeze.git "$HOME/.scm_breeze"
+         "$HOME/.scm_breeze/install.sh"
 fi
 
 # Linux Homebrew

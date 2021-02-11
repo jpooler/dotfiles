@@ -49,3 +49,22 @@ fi
 #eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 [ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+export PATH=$HOME/homebrew/bin:$PATH
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
+
+[ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
+export PATH="/Users/jpooler/homebrew/bin/gettext:$PATH"
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export LDFLAGS="-L/Users/jpooler/homebrew/bin/gettext/lib"
+export CPPFLAGS="-I/Users/jpooler/homebrew/bin/gettext/include"
+export PATH="/Users/jpooler/homebrew/sbin:$PATH"
+
+
+export CLOUDSDK_PYTHON="$(brew --prefix)/opt/python@3.8/libexec/bin/python"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
