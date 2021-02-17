@@ -45,6 +45,8 @@ Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vimwiki/vimwiki'
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+Plug 'mattn/calendar-vim'
 
 call plug#end()
 
@@ -259,7 +261,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Terraform fmt
 let g:terraform_fmt_on_save = 1
 let g:terraform_fold_sections=0
-let g:terraform_remap_spacebar=1
+"let g:terraform_remap_spacebar=1
 
 " Terraform magic!
 command! -bar PrettifyTerraformKeywords %s/^"\(module\|resource\|data\)"/\1/e
@@ -311,6 +313,7 @@ endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+"inoremap <silent><expr> <c-@> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -417,3 +420,37 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
 let g:snipMate = { 'snippet_version' : 1 }
+map <leader>md :InstantMarkdownPreview<CR>
+let g:instant_markdown_autostart = 0	" disable autostart
+
+
+
+" vimwiki - Personal Wiki for Vim
+" https://github.com/vimwiki/vimwiki
+set nocompatible
+filetype plugin on
+syntax on
+" vimwiki with markdown support
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" helppage -> :h vimwiki-syntax
+
+let g:vimwiki_list = [
+            \{'path': '~/Tools/work/vimwiki/index.wiki', 'syntax': 'markdown'}
+                \]
+au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
+"au BufRead,BufNewFile *.wiki set filetype=vimwiki
+":autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
+function! ToggleCalendar()
+  execute ":Calendar"
+  if exists("g:calendar_open")
+    if g:calendar_open == 1
+      execute "q"
+      unlet g:calendar_open
+    else
+      g:calendar_open = 1
+    end
+  else
+    let g:calendar_open = 1
+  end
+endfunction
+:autocmd FileType vimwiki map c :call ToggleCalendar()
