@@ -2,7 +2,7 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #[ -s ~/.bash_profile ] && source ~/.bash_profile
 export PATH=$HOME/homebrew/bin:$PATH
 source ~/dotfiles/git_colors.sh
@@ -144,7 +144,8 @@ export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.14.4/bin/:$PATH"
-export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
+export PATH="$HOME/.asdf/installs/terraform/0.12.29/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.11.14/bin/:$PATH"
 #export PATH="/opt/local/bin:$PATH"
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
@@ -425,4 +426,6 @@ eval "$(pipenv --completion)"
 #auto_pipenv_shell
 
 
-[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+#[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+
+[ -s "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh"

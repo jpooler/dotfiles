@@ -46,13 +46,13 @@ fi
 #    command jenv "$command" "$@";;
 #  esac
 #}
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
-export PATH=$HOME/homebrew/bin:$PATH
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
+#[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+#export PATH=$HOME/homebrew/bin:$PATH
+#export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
 
-[ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
+#[ -s "/Users/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/Users/jpooler/.scm_breeze/scm_breeze.sh"
 export PATH="/Users/jpooler/homebrew/bin/gettext:$PATH"
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export LDFLAGS="-L/Users/jpooler/homebrew/bin/gettext/lib"
@@ -68,3 +68,5 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
+
+[ -s "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh"
