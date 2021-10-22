@@ -46,7 +46,7 @@ fi
 #    command jenv "$command" "$@";;
 #  esac
 #}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 #[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
 #export PATH=$HOME/homebrew/bin:$PATH

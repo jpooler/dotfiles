@@ -2,7 +2,7 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #[ -s ~/.bash_profile ] && source ~/.bash_profile
 export PATH=$HOME/homebrew/bin:$PATH
 source ~/dotfiles/git_colors.sh
@@ -436,11 +436,7 @@ eval "$(pipenv --completion)"
 #auto_pipenv_shell
 
 
-<<<<<<< HEAD
 [ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
 source <(kubectl completion bash)
-=======
 #[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
 
-[ -s "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh"
->>>>>>> 4e4a4d650b949897f06936d424d3206887f996a1
