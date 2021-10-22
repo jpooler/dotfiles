@@ -1,4 +1,4 @@
-[ -s ~/.bashrc ] && source ~/.bashrc
+[ -s /Users/jpooler/.bashrc ] && source /Users/jpooler/.bashrc
 [ -s ~/.profile ] && source ~/.profile
 
 #complete -C '/usr/local/bin/aws_completer' aws
@@ -65,6 +65,10 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+export PATH=$HOME/homebrew/opt/mysql@5.7/bin:$PATH
+. "$(brew --prefix asdf)/asdf.sh"
+. "$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash"
 
+export PATH="/Users/jpooler/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="/Users/jpooler/Applications/helm/helm:$PATH"
+ #export AWS_PROFILE=efs_aws_prod

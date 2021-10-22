@@ -9,6 +9,7 @@ source ~/dotfiles/git_colors.sh
 source ~/dotfiles/git-completion.bash
 source ~/dotfiles/tmuxinator_completion.bash
 source ~/dotfiles/testkitchen_completion.bash
+source /Users/jpooler/Tools/work/aws-mfa-script/alias.sh
 
 # History Fix
 #export HISTTIMEFORMAT="%y-%m-%d %T " # Set the history datetime format
@@ -129,6 +130,17 @@ alias kd="kubectl get deploy"
 alias kpause='kind get nodes|xargs docker pause'
 alias kunpause='kind get nodes|xargs docker unpause'
 alias as='gcloud beta compute ssh --zone "us-east4-c" "mft-exi-manage-prd-cig-usea4-ansible-3d8f-lrfc" --tunnel-through-iap --project "exi-manage-prd-4ed1"'
+alias vd='vim +VimwikiMakeDiaryNote'
+alias tgp='TF_VAR_env=prod terragrunt plan'
+alias tgs='export AWS_PROFILE=efs_aws_prod; TF_VAR_env=sand terragrunt plan'
+alias tgd='TF_VAR_env=dev terragrunt plan'
+alias rmt='rm -rf .terragrunt*'
+alias prep='asdf local terraform 0.13.6 && pre-commit run --all-files'
+alias pcr='pre-commit run --all-files'
+
+function ecc() {
+    aws ec2-instance-connect send-ssh-public-key --instance-id "$1" --availability-zone "$2" --instance-os-user ubuntu --ssh-public-key file:///Users/jpooler/.ssh/gcp_bitbucketkey.pub --region us-gov-east-1
+}
 
 
 #complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh rsync
@@ -138,13 +150,15 @@ alias as='gcloud beta compute ssh --zone "us-east4-c" "mft-exi-manage-prd-cig-us
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/bin"
 export PATH="$PATH:$HOME/Tools/sandbox"
-export PATH="~/Tools/git/tfenv/bin:$PATH"
+#export PATH="~/Tools/git/tfenv/bin:$PATH"
 export GOPATH=$HOME/Tools/go_learning
 export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
-export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
-#export PATH="$HOME/.asdf/installs/terraform/0.14.4/bin/:$PATH"
-export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
+#export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
+export PATH="$HOME/.asdf/installs/terraform/0.14.10/bin/:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.13.5/bin/:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
+#export PATH="$HOME/.asdf/installs/terraform/0.12.29/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.11.14/bin/:$PATH"
 #export PATH="/opt/local/bin:$PATH"
 #export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
@@ -426,3 +440,4 @@ eval "$(pipenv --completion)"
 
 
 [ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+source <(kubectl completion bash)
