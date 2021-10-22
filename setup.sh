@@ -218,14 +218,14 @@ if [[ $(uname) == "Linux" ]]; then
 				libssl-dev python3-dev python3-minimal python3-pip python-gi python3-gi python3-setuptools \
 			        pipenv vim nodejs docker docker-compose vlc
 		fi
-		if [ ! -f "/etc/apt/sources.list.d/dropbox.list" ]; then
-		    echo "installing dropbox"
-		    sudo touch "/etc/apt/sources.list.d/dropbox.list"
-		    echo "deb [arch=i386,amd64] http://linux.dropbox.com/ubuntu bionic main" | sudo tee -a /etc/apt/sources.list.d/dropbox.list
-		    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
-		    sudo apt update
-                    sudo apt install python3-gpg dropbox
-                fi
+		#if [ ! -f "/etc/apt/sources.list.d/dropbox.list" ]; then
+		#    echo "installing dropbox"
+		#    sudo touch "/etc/apt/sources.list.d/dropbox.list"
+		#    echo "deb [arch=i386,amd64] http://linux.dropbox.com/ubuntu bionic main" | sudo tee -a /etc/apt/sources.list.d/dropbox.list
+		#    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
+		#    sudo apt update
+                #    sudo apt install python3-gpg dropbox
+                #fi
 
 
 #		if [ ! -d "$HOME/.fonts" ]; then

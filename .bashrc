@@ -2,7 +2,7 @@ shopt -s expand_aliases
 export EDITOR=vim
 #export PIP_REQUIRE_VIRTUALENV=true
 
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #[ -s ~/.bash_profile ] && source ~/.bash_profile
 export PATH=$HOME/homebrew/bin:$PATH
 source ~/dotfiles/git_colors.sh
@@ -159,10 +159,7 @@ export PATH="$HOME/.asdf/installs/terraform/0.14.10/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.13.5/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.12.29/bin/:$PATH"
-#export PATH="$HOME/.asdf/installs/terraform/0.11.14/bin/:$PATH"
-#export PATH="/opt/local/bin:$PATH"
-#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+#export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 export  VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
 
 #Python has been installed as
@@ -439,5 +436,11 @@ eval "$(pipenv --completion)"
 #auto_pipenv_shell
 
 
+<<<<<<< HEAD
 [ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
 source <(kubectl completion bash)
+=======
+#[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
+
+[ -s "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler-r2b2/.scm_breeze/scm_breeze.sh"
+>>>>>>> 4e4a4d650b949897f06936d424d3206887f996a1
