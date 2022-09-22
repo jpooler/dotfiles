@@ -66,10 +66,9 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/compl
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 
 export PATH=$HOME/homebrew/opt/mysql@5.7/bin:$PATH
-. "$(brew --prefix asdf)/asdf.sh"
+. "$(brew --prefix asdf)/libexec/asdf.sh"
 . "$(brew --prefix asdf)/etc/bash_completion.d/asdf.bash"
 
 export PATH="/Users/jpooler/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/Users/jpooler/Applications/helm/helm:$PATH"
- #export AWS_PROFILE=efs_aws_prod
 

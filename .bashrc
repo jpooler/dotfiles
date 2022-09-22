@@ -43,7 +43,7 @@ export BYOBU_PREFIX=$(brew --prefix)
 # Added 12/16/18
 # Can't find blogpost about this, fml
 
-functions() { cd ~/Tools/git/dotfiles; echo -e "$(cat functions)" | less -R; }
+functions() { cd ~/dotfiles; echo -e "$(cat functions)" | less -R; }
 
 isthere() { if (($(grep -c -m 1 "$1" "$3"))); then echo "YES"; else echo "NO"; fi; }
 function ec2ssh() {
@@ -109,7 +109,9 @@ function awsacct_alias_tools() {
 
 #
 
-alias ll="ls -lah"
+#alias ll="gls -Flh --group-directories-first"
+#alias ll="ls -lah"
+alias ll="gls -lah"
 alias tmux="TERM=screen-256color-bce tmux"
 alias mux="TERM=screen-256color-bce mux"
 alias rm='rm -i'
@@ -123,17 +125,16 @@ alias dps='docker ps'
 #alias rui="docker rmi $(docker images | grep "^<none>" | awk '{print $3}')"
 #alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias uvp="cd ~/.vim && git submodule update --init && git submodule foreach git pull origin master"
-alias k=kubectl
+alias k="source /Users/jpooler/.token_file && kubectl"
 complete -F __start_kubectl k
-alias kg="kubectl get po"
+alias kg="source /Users/jpooler/.token_file && kubectl get po"
 alias kd="kubectl get deploy"
 alias kpause='kind get nodes|xargs docker pause'
 alias kunpause='kind get nodes|xargs docker unpause'
-alias as='gcloud beta compute ssh --zone "us-east4-c" "mft-exi-manage-prd-cig-usea4-ansible-3d8f-lrfc" --tunnel-through-iap --project "exi-manage-prd-4ed1"'
 alias vd='vim +VimwikiMakeDiaryNote'
-alias tgp='TF_VAR_env=prod terragrunt plan'
-alias tgs='export AWS_PROFILE=efs_aws_prod; TF_VAR_env=sand terragrunt plan'
-alias tgd='TF_VAR_env=dev terragrunt plan'
+alias tgp='source /Users/jpooler/.token_file && TF_VAR_env=prod terragrunt plan'
+alias tgs='source /Users/jpooler/.token_file && export AWS_PROFILE=efs_aws_prod; TF_VAR_env=sand terragrunt plan'
+alias tgd='source /Users/jpooler/.token_file && TF_VAR_env=dev terragrunt plan'
 alias rmt='rm -rf .terragrunt*'
 alias prep='asdf local terraform 0.13.6 && pre-commit run --all-files'
 alias pcr='pre-commit run --all-files'
@@ -156,6 +157,7 @@ export PATH=$PATH:$HOME/Tools/go_learning/bin
 export PATH="$GOPATH:$PATH"
 #export PATH="/Users/jpooler/.gem/ruby/2.3.0/bin:$PATH"
 export PATH="$HOME/.asdf/installs/terraform/0.14.10/bin/:$PATH"
+export PATH="/Users/jpooler/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.13.5/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.13.6/bin/:$PATH"
 #export PATH="$HOME/.asdf/installs/terraform/0.12.29/bin/:$PATH"
