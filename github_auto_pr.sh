@@ -21,4 +21,9 @@ $TEST
 " > ~/prepared-message.md
 
 git push --set-upstream origin $BRANCH
+## 
+## Above isn't needed if you set:
+# git config --global push.default current
+#git config --global push.autoSetupRemote true
+
 hub pull-request -c -F ~/prepared-message.md #-r "$REVIEWERS"

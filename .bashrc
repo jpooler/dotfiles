@@ -442,3 +442,15 @@ eval "$(pipenv --completion)"
 source <(kubectl completion bash)
 #[ -s "/home/jpooler/.scm_breeze/scm_breeze.sh" ] && source "/home/jpooler/.scm_breeze/scm_breeze.sh"
 
+
+###
+
+#List all EC2 Instance IP’s in our account, by IP Order
+#
+#
+#aws ec2 describe-instances --query "Reservations[*].Instances[*].{PublicIP:PublicIpAddress,PrivateIP:PrivateIpAddress,Name:Tags[?Key=='Name']|[0].Value,Type:InstanceType,Status:State.Name,VpcId:VpcId} | sort_by([],&PrivateIP) " --filters Name=instance-state-name,Values=running --output table --region us-gov-east-1
+#sorts by IP! 
+#gets just ip’s, in order:
+#aws ec2 describe-instances --query "Reservations[*].Instances[*].{PrivateIP:PrivateIpAddress} | sort_by([],&PrivateIP) " --filters Name=instance-state-name,Values=running --output table --region us-gov-east-1
+# 
+export PATH="${PATH}:${HOME}/.krew/bin"

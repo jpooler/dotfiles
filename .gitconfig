@@ -3,3 +3,6 @@
         email = jarrod.pooler@gmail.com
 [pull]
     rebase = false
+[push]
+	default = current
+	autoSetupRemote = true
